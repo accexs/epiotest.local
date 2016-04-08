@@ -29,7 +29,7 @@ angular.module('recipeService', [])
 		//find recipe and send by id
 		send : function(id) {
 			return $http.get('recipes/send/' + id);
-		}
+		},
 
 		//delete recipe
 		destroy : function(id) {

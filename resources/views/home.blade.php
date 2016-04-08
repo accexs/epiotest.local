@@ -109,11 +109,11 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h3 class="modal-title" id="recipeModalLabel"> <% formTitle2 %> </h3>
+					<h3 class="modal-title" id="recipeModalLabel"> <% formTitle %> </h3>
 				</div>
 
 				<div class="modal-body">
-					<form name="recipeForm" class="form-horizontal" novalidate="" ng-submit="submitRecipe()" enctype="multipart/form-data">
+					<form name="recipeForm" class="form-horizontal" novalidate="" ng-submit="submitRecipe(mode,id)" enctype="multipart/form-data">
 						<div class="">
 						<div class="panel panel-info panel-body">
 							<div class="panel-heading">
@@ -146,6 +146,13 @@
 								<div class="col-md-4">
 									<input class="form-control datepicker" type="text" name="bdate" value=" <% bdate %> " ng-model="recipeData.bdate" required placeholder="Click para seleccionar">
 									<p class="col-md-offset-3" ng-show="recipeForm.bdate.$invalid"><small>Se requiere la fecha</small></p>
+								</div>
+							</div>
+							<div class="form-group error">
+								<label for="email" class="col-md-4 control-label">Email</label>
+								<div class="col-md-4">
+									<input class="form-control" type="email" name="email" value="<% email %>" ng-model="recipeData.email" required>
+									<p class="help-inline col-md-offset-3" ng-show="recipeForm.email.$invalid">Se requiere el email</p>
 								</div>
 							</div>
 						</div>

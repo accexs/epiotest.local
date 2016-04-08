@@ -10,6 +10,7 @@ use App\Recipe;
 use App\User;
 use Validator;
 use Auth;
+use Illuminate\Support\Facades\Mail;
 
 class RecipeController extends Controller
 {
@@ -107,18 +108,43 @@ class RecipeController extends Controller
                 ]);
         }else{
             $recipe = Recipe::find($id);
-            $recipe -> name = $request('name');
-            $recipe -> lastName = $request('lastname');
-            $recipe -> ci = $request('ci');
-            $recipe -> bdate = $request('bdate');
-            $recipe -> email = $request('email');
-            $recipe -> meds = $request('meds');
-            $recipe -> desc = $request('desc');
+            $recipe -> name = $request->input('name');
+            $recipe -> lastName = $request->input('lastname');
+            $recipe -> ci = $request->input('ci');
+            $recipe -> bdate = $request->input('bdate');
+            $recipe -> email = $request->input('email');
+            $recipe -> meds = $request->input('meds');
+            //$recipe -> desc = $request('desc');
             $recipe -> save();
             return response()->json([
                 'success' => true
                 ]);
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */ 
+    public function send($id) {
+        //
+        $recipe = Recipe::find($id);
+        Mail::send('emails.recipe',[
+            'name' => $recipe->name,
+            'lastname' => $recipe->lastname,
+            'ci' => $recipe->ci,
+            'bdate' => $recipe->bdate,
+            'meds' => $recipe->name
+            ], function($message) {
+            $message->to($recipe->email)
+                ->subject('Récipe médico')
+                ->from('noreply@epiotest.local');
+        });
+        return response()->json([
+            'success' => true
+            ]);
     }
 
     /**

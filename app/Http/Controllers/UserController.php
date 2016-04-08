@@ -65,8 +65,8 @@ class UserController extends Controller
                     'token' =>  'http://epiotest.local/register/verify/'.$user->confirmation_code
                     ], function($message) {
                     $message->to($user->email)
-                    ->subject('confirmación cuenta epiotest')
-                    $message->from('noreply@epiotest.com');
+                        ->subject('confirmación cuenta epiotest')
+                        ->from('noreply@epiotest.local');
                 });
 
             return response()->json([

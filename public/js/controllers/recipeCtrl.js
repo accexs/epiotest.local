@@ -63,7 +63,7 @@ angular.module('recipeCtrl', [])
 	};
 
 	$scope.sendRecipe = function(){
-		if ($scope.recipeData.email) {
+		if ($scope.recipeData.email != null) {
 			//send
 			Recipe.send($scope.recipeData.id)
 			.success(function(data){

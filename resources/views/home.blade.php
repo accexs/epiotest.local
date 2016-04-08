@@ -163,6 +163,7 @@
 							        <p class="col-md-offset-3" ng-show="recipeForm.meds.$invalid" class="help-inline">Información requerida.</p>
 							    </div>
 							</div>
+							<div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-info" ng-click="sendRecipe()">Enviar por correo</button>
 							    <button type="submit" class="btn btn-primary" id="btn-save" ng-disabled="recipeForm.$invalid">Guardar</button>

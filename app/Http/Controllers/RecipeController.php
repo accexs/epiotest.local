@@ -44,7 +44,14 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         //
-        $rules = [];
+        $rules = [
+            'name' => 'required|alpha|max:50',
+            'lastname' => 'required|alpha|max:50',
+            'ci' => 'required|max:10',
+            'bdate' => 'date',
+            'email' => 'email|max:50',
+            'meds' => 'required|max:1000',
+        ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json([
@@ -99,7 +106,14 @@ class RecipeController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $rules = [];
+        $rules = [
+            'name' => 'required|alpha|max:50',
+            'lastname' => 'required|alpha|max:50',
+            'ci' => 'required|max:10',
+            'bdate' => 'date',
+            'email' => 'email|max:50',
+            'meds' => 'required|max:1000',
+        ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json([
@@ -130,17 +144,25 @@ class RecipeController extends Controller
      */ 
     public function send($id) {
         //
+        $rules = [
+            'name' => 'required|alpha|max:50',
+            'lastname' => 'required|alpha|max:50',
+            'ci' => 'required|max:10',
+            'bdate' => 'date',
+            'email' => 'required|email|max:50',
+            'meds' => 'required|max:1000',
+        ];
         $recipe = Recipe::find($id);
         Mail::send('emails.recipe',[
             'name' => $recipe->name,
             'lastname' => $recipe->lastname,
             'ci' => $recipe->ci,
             'bdate' => $recipe->bdate,
-            'meds' => $recipe->name
-            ], function($message) {
-            $message->to($recipe->email)
-                ->subject('Récipe médico')
-                ->from('noreply@epiotest.local');
+            'meds' => $recipe->meds
+            ],  function($message) use ($recipe) {
+                $message->from('noreply@epiotest.local');
+                $message->to($recipe->email)->subject('Récipe médico');
+                    
         });
         return response()->json([
             'success' => true

@@ -63,10 +63,10 @@ class UserController extends Controller
             Mail::send('emails.confirm',[
                     'name' => $user->name,
                     'token' =>  'http://epiotest.local/register/verify/'.$user->confirmation_code
-                    ], function($message) {
-                    $message->to($user->email)
-                        ->subject('confirmación cuenta epiotest')
-                        ->from('noreply@epiotest.local');
+                    ], function($message) use ($user) {
+                        $message->from('noreply@epiotest.local');
+                        $message->to($user->email)->subject('confirmación cuenta epiotest');
+                        
                 });
 
             return response()->json([

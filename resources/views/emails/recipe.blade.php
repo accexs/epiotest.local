@@ -7,6 +7,7 @@
 		<p><strong>Fecha de nacimiento:</strong>{{ $bdate }}</p>
 	</div>
 	<div>
+		<h3>Medicamentos y prescripción</h3>
 		{{ $meds }}
 	</div>
 </div>

@@ -40,6 +40,9 @@ angular.module('userCtrl', [])
 			.success(function(data) {
 				if (data.success == false) {
 					$scope.errors = data.errors;
+					$('#regModal').modal('hide');
+					$('#warnModal').modal('show');
+					$scope.mensaje = 'Error al iniciar sesión';
 				}else{
 					$('#regModal').modal('hide');
 					if (mode == 'login') {

@@ -62,20 +62,25 @@ angular.module('recipeCtrl', [])
 			});
 	};
 
-	$scope.sendRecipe = function(){
-		if ($scope.recipeData.email != null) {
+	//function to send recipe to pacient
+	$scope.sendRecipe = function(id,email){
+		if (email != null) {
 			//send
-			Recipe.send($scope.recipeData.id)
+			Recipe.send(id)
 			.success(function(data){
 				if (data.success == false) {
 					//errors
 				}else{
 					//show msg
-					alert("Récipe enviado al paciente");
+					$('#warnModal').modal('show');
+					$scope.mensaje = 'Récipe enviado';
+					
 				}
 			});
 		}else{
 			//show no email found
+			$('#warnModal').modal('show');
+			$scope.mensaje = 'Sin dirección de correo';
 		}
 	}
 

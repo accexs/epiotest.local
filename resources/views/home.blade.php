@@ -3,7 +3,7 @@
 @section('content')
 <div class="container" ng-controller="recipeController">
 	<div class="row">
-		<div class="col-md-4 col-md-offset-1">
+		<div class="col-md-4">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 				@if (Auth::guest())
@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		@if (!Auth::guest())
-			<div class="col-md-6">
+			<div class="col-md-8">
 				<div class="panel panel-primary">
 					<div class="panel-heading text-center">
 						<h4>Récipes creados</h4>
@@ -46,6 +46,7 @@
 									</td>
 									<td>
 										<button class="btn btn-info" ng-click="modalRecipe('edit',recipe.id)">Detalle</button>
+										<button type="button" class="btn btn-info" ng-click="sendRecipe(recipe.id,recipe.email)">Enviar por correo</button>
 										<button class="btn btn-danger" ng-click="confirmDelete(recipe.id)">Eliminar</button>
 									</td>
 								</tr>
@@ -56,6 +57,46 @@
 			</div>
 		@endif
 	</div>
+
+	<!--modal for warnings-->
+	<div class="modal fade" id="warnModal" tabindex="-1" role="dialog" aria-labelledby="warnModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="text-center">
+					<h5> <% mensaje %> </h5>
+				</div>
+				<div class="modal-body">
+					<div class="text-center">
+						<button data-dismiss="modal" class="btn btn-danger" id="btn-save">ok</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end modal-->
+
+	<!--modal del confirmation-->
+	<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h3 class="modal-title" id="myModalLabel"> Confirmar eliminación </h3>
+				</div>
+				<div class="modal-body">
+					<div class="text-center">
+						<button ng-click="deleteRecipe(tempId)" class="btn btn-danger" id="btn-save">Eliminar</button>
+						<button ng-click="cancelDelete()" class="btn btn-primary" id="btn-save">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--end modal-->
+
 	<!--modal for registration and login-->
 	<div class="modal fade" id=regModal tabindex="-1" role="dialog" aria-labelledby="regModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -90,6 +131,9 @@
 									<input class="form-control" type="password" name="password" value="" ng-model="userData.password" required>
 									<p class="col-md-offset-3" ng-show="regForm.password.$invalid">Se requiere un password</p>
 								</div>
+							</div>
+							<div class="error" ng-repeat="error in errors">
+								<p> <% error %> </p>
 							</div>
 							<div class="modal-footer">
 								<button type="submit" class="btn btn-primary" id="btm-save" ng-disabled="regForm.$invalid"><% submitBtn %></button>
@@ -163,9 +207,11 @@
 							        <p class="col-md-offset-3" ng-show="recipeForm.meds.$invalid" class="help-inline">Información requerida.</p>
 							    </div>
 							</div>
+							<div class="error" ng-repeat="error in errors">
+								<p> <% error %> </p>
+							</div>
 							<div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-info" ng-click="sendRecipe()">Enviar por correo</button>
 							    <button type="submit" class="btn btn-primary" id="btn-save" ng-disabled="recipeForm.$invalid">Guardar</button>
 							</div>
 						</div>
@@ -176,24 +222,6 @@
 	</div>
 	<!--end modal-->
 
-	<!--modal del confirmation-->
-	<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h3 class="modal-title" id="myModalLabel"> Confirmar eliminación </h3>
-				</div>
-				<div class="modal-body">
-					<div class="text-center">
-						<button ng-click="deleteRecipe(tempId)" class="btn btn-danger" id="btn-save">Eliminar</button>
-						<button ng-click="cancelDelete()" class="btn btn-primary" id="btn-save">Cancelar</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--end modal-->
 	        
 </div>
 @endsection

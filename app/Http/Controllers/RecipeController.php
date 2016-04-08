@@ -22,7 +22,7 @@ class RecipeController extends Controller
     public function index()
     {
         //
-        return response()->json(Recipe::all());
+        return response()->json(Auth::user()->recipes);
     }
 
     /**
